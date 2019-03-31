@@ -285,3 +285,29 @@ h3.domoSkill {
 .domo:last-child {
   margin-bottom: 10px;
 }
+
+.deleteDomoSubmit {
+  background-color: #f44336;
+  transition: background-color 0.4s ease;
+  display: inline;
+  border-radius: 10px;
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+}
+
+.deleteDomoSubmit:link,
+.deleteDomoSubmit:visited,
+.deleteDomoSubmit:hover,
+.deleteDomoSubmit:active {
+  color: white;
+}
+
+.deleteDomoSubmit:hover {
+  transition: background-color 0.4s ease;
+  background-color: #940000;
+}
+
+.forms {
+  display: flex;
+}

@@ -57,6 +57,19 @@ DomoSchema.statics.findByOwner = (ownerId, callback) => {
     .exec(callback);
 };
 
+DomoSchema.statics.deleteDomos = (ownerId, callback) => {
+  console.log("in models");
+  const search = {
+    owner: convertId(ownerId)
+  };
+
+  // db.users.deleteMany({ status : "A" })
+
+  // DomoModel.remove({ search }).exec(callback);
+
+  return DomoModel.remove({ search }).exec(callback);
+};
+
 DomoModel = mongoose.model("Domo", DomoSchema);
 
 module.exports.DomoModel = DomoModel;

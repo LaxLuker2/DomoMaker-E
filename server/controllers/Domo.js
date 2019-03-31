@@ -44,9 +44,9 @@ const makeDomo = (req, res) => {
   return domoPromise;
 };
 
-//get json responses of domos for a user
-//update dynamically using REACT, pair data on screen to data from this func
-//no reloading of page grab updates from server and immediately update UI
+// get json responses of domos for a user
+// update dynamically using REACT, pair data on screen to data from this func
+// no reloading of page grab updates from server and immediately update UI
 const getDomos = (request, response) => {
   const req = request;
   const res = response;
@@ -61,6 +61,34 @@ const getDomos = (request, response) => {
   });
 };
 
+// const deleteDomos = (request, response) => {
+//   const req = request;
+//   const res = response;
+
+//   return Domo.DomoModel.deleteDomos(req.session.account._id, (err, docs) => {
+//     if (err) {
+//       console.log(err);
+//       return res.status(400).json({ error: 'An error occured' });
+//     }
+
+//     return res.json({ domos: docs });
+//   });
+// };
+
+const deleteDomos = (req, res) => {
+  console.log("in controller");
+  // grab all Domos for user based on user id in their session
+  Domo.DomoModel.deleteDomos(req.session.account._id, (err, docs) => {
+    if (err) {
+      console.log("err");
+      console.log(err);
+      return res.status(400).json({ error: "An error occured" });
+    }
+    return res.render("app", { csrfToken: req.csrfToken(), domos: docs });
+  });
+};
+
 module.exports.makerPage = makerPage;
 module.exports.getDomos = getDomos;
+module.exports.deleteDomos = deleteDomos;
 module.exports.make = makeDomo;

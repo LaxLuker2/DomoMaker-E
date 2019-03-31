@@ -18,43 +18,80 @@ var handleDomo = function handleDomo(e) {
   return false;
 };
 
+var deleteDomo = function deleteDomo(e) {
+  e.preventDefault();
+
+  $("#domoMessage").animate({ width: "hide" }, 350);
+
+  console.log("delete all");
+
+  sendAjax("DELETE", $("#deleteDomo").attr("action"), function () {
+    deleteDomosFromServer();
+  });
+
+  return false;
+};
+
 //react JSX for add domo form
 var DomoForm = function DomoForm(props) {
-  return React.createElement(
-    "form",
-    {
-      id: "domoForm",
-      onSubmit: handleDomo,
-      name: "domoForm",
-      action: "/maker",
-      method: "POST",
-      className: "domoForm"
-    },
+  return (
+    //(
     React.createElement(
-      "label",
-      { htmlFor: "name" },
-      "Name: "
-    ),
-    React.createElement("input", { id: "domoName", type: "text", name: "name", placeholder: "Domo Name" }),
-    React.createElement(
-      "label",
-      { htmlFor: "age" },
-      "Age: "
-    ),
-    React.createElement("input", { id: "domoAge", type: "text", name: "age", placeholder: "Domo Age" }),
-    React.createElement(
-      "label",
-      { htmlFor: "skill" },
-      "Skill: "
-    ),
-    React.createElement("input", {
-      id: "domoSkill",
-      type: "text",
-      name: "skill",
-      placeholder: "Domos Skill"
-    }),
-    React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
-    React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Make Domo" })
+      "div",
+      { className: "forms" },
+      React.createElement(
+        "form",
+        {
+          id: "domoForm",
+          onSubmit: handleDomo,
+          name: "domoForm",
+          action: "/maker",
+          method: "POST",
+          className: "domoForm"
+        },
+        React.createElement(
+          "label",
+          { htmlFor: "name" },
+          "Name: "
+        ),
+        React.createElement("input", { id: "domoName", type: "text", name: "name", placeholder: "Domo Name" }),
+        React.createElement(
+          "label",
+          { htmlFor: "age" },
+          "Age: "
+        ),
+        React.createElement("input", { id: "domoAge", type: "text", name: "age", placeholder: "Domo Age" }),
+        React.createElement(
+          "label",
+          { htmlFor: "skill" },
+          "Skill: "
+        ),
+        React.createElement("input", {
+          id: "domoSkill",
+          type: "text",
+          name: "skill",
+          placeholder: "Domos Skill"
+        }),
+        React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
+        React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Make Domo" })
+      ),
+      React.createElement(
+        "form",
+        {
+          id: "deleteDomo",
+          onSubmit: deleteDomo,
+          name: "deleteDomo",
+          action: "/deleteDomos",
+          method: "DELETE"
+          // className="domoForm"
+        },
+        React.createElement("input", {
+          className: "deleteDomoSubmit",
+          type: "submit",
+          value: "Delete Domos"
+        })
+      )
+    )
   );
 };
 
@@ -118,6 +155,13 @@ var DomoList = function DomoList(props) {
 var loadDomosFromServer = function loadDomosFromServer() {
   sendAjax("GET", "/getDomos", null, function (data) {
     ReactDOM.render(React.createElement(DomoList, { domos: data.domos }), document.querySelector("#domos"));
+  });
+};
+
+//delete all domos
+var deleteDomosFromServer = function deleteDomosFromServer() {
+  sendAjax("DELETE", "/deleteDomos", null, function (data) {
+    ReactDOM.render(React.createElement(DomoList, { domos: [] }), document.querySelector("#domos"));
   });
 };
 

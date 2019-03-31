@@ -25,31 +25,62 @@ const handleDomo = e => {
   return false;
 };
 
+const deleteDomo = e => {
+  e.preventDefault();
+
+  $("#domoMessage").animate({ width: "hide" }, 350);
+
+  console.log("delete all");
+
+  sendAjax("DELETE", $("#deleteDomo").attr("action"), function() {
+    deleteDomosFromServer();
+  });
+
+  return false;
+};
+
 //react JSX for add domo form
 const DomoForm = props => {
   return (
-    <form
-      id="domoForm"
-      onSubmit={handleDomo}
-      name="domoForm"
-      action="/maker"
-      method="POST"
-      className="domoForm"
-    >
-      <label htmlFor="name">Name: </label>
-      <input id="domoName" type="text" name="name" placeholder="Domo Name" />
-      <label htmlFor="age">Age: </label>
-      <input id="domoAge" type="text" name="age" placeholder="Domo Age" />
-      <label htmlFor="skill">Skill: </label>
-      <input
-        id="domoSkill"
-        type="text"
-        name="skill"
-        placeholder="Domos Skill"
-      />
-      <input type="hidden" name="_csrf" value={props.csrf} />
-      <input className="makeDomoSubmit" type="submit" value="Make Domo" />
-    </form>
+    //(
+    <div className="forms">
+      <form
+        id="domoForm"
+        onSubmit={handleDomo}
+        name="domoForm"
+        action="/maker"
+        method="POST"
+        className="domoForm"
+      >
+        <label htmlFor="name">Name: </label>
+        <input id="domoName" type="text" name="name" placeholder="Domo Name" />
+        <label htmlFor="age">Age: </label>
+        <input id="domoAge" type="text" name="age" placeholder="Domo Age" />
+        <label htmlFor="skill">Skill: </label>
+        <input
+          id="domoSkill"
+          type="text"
+          name="skill"
+          placeholder="Domos Skill"
+        />
+        <input type="hidden" name="_csrf" value={props.csrf} />
+        <input className="makeDomoSubmit" type="submit" value="Make Domo" />
+      </form>
+      <form
+        id="deleteDomo"
+        onSubmit={deleteDomo}
+        name="deleteDomo"
+        action="/deleteDomos"
+        method="DELETE"
+        // className="domoForm"
+      >
+        <input
+          className="deleteDomoSubmit"
+          type="submit"
+          value="Delete Domos"
+        />
+      </form>
+    </div>
   );
 };
 
@@ -93,6 +124,13 @@ const loadDomosFromServer = () => {
       <DomoList domos={data.domos} />,
       document.querySelector("#domos")
     );
+  });
+};
+
+//delete all domos
+const deleteDomosFromServer = () => {
+  sendAjax("DELETE", "/deleteDomos", null, data => {
+    ReactDOM.render(<DomoList domos={[]} />, document.querySelector("#domos"));
   });
 };
 
