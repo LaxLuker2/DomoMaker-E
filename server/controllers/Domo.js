@@ -88,7 +88,12 @@ const deleteDomos = (req, res) => {
   });
 };
 
+const whatIsDomosPage = (req, res) => {
+  res.render("whatIsDomo", { csrfToken: req.csrfToken() });
+};
+
 module.exports.makerPage = makerPage;
+module.exports.whatIsDomosPage = whatIsDomosPage;
 module.exports.getDomos = getDomos;
 module.exports.deleteDomos = deleteDomos;
 module.exports.make = makeDomo;

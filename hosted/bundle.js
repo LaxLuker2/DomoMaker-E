@@ -95,6 +95,35 @@ var DomoForm = function DomoForm(props) {
   );
 };
 
+var WhatIsADomoWindow = function WhatIsADomoWindow(props) {
+  return React.createElement(
+    "div",
+    { className: "whatIsdomo" },
+    React.createElement("img", {
+      src: "/assets/img/domoface.jpeg",
+      alt: "domo face",
+      className: "domoFace"
+    }),
+    React.createElement(
+      "h3",
+      { className: "whatIsDomoName" },
+      "Name: A Domo gets his name from his very own creator"
+    ),
+    React.createElement("br", null),
+    React.createElement(
+      "h3",
+      { className: "whatIsDomoAge" },
+      "Age: A Domo lives and never dies."
+    ),
+    React.createElement("br", null),
+    React.createElement(
+      "h3",
+      { className: "whatIsDomoSkill" },
+      "Skill: Domos are legends that are never forgotton with the skills of gods!"
+    )
+  );
+};
+
 //determine what to draw
 //can update via Ajax and every time state updates page creates UI and shows
 var DomoList = function DomoList(props) {
@@ -165,7 +194,19 @@ var deleteDomosFromServer = function deleteDomosFromServer() {
   });
 };
 
+var createWhatIsADomoWindow = function createWhatIsADomoWindow(csrf) {
+  ReactDOM.render(React.createElement(WhatIsADomoWindow, { csrf: csrf }), document.querySelector("#domos"));
+};
+
 var setup = function setup(csrf) {
+  var whatIsADomoButton = document.querySelector("#whatIsADomoButton");
+
+  whatIsADomoButton.addEventListener("click", function (e) {
+    e.preventDefault();
+    createWhatIsADomoWindow(csrf);
+    return false;
+  });
+
   ReactDOM.render(React.createElement(DomoForm, { csrf: csrf }), document.querySelector("#makeDomo"));
 
   ReactDOM.render(React.createElement(DomoList, { domos: [] }), document.querySelector("#domos"));

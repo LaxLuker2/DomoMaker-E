@@ -84,6 +84,28 @@ const DomoForm = props => {
   );
 };
 
+const WhatIsADomoWindow = props => {
+  return (
+    <div className="whatIsdomo">
+      <img
+        src="/assets/img/domoface.jpeg"
+        alt="domo face"
+        className="domoFace"
+      />
+      <h3 className="whatIsDomoName">
+        Name: A Domo gets his name from his very own creator
+      </h3>
+      <br />
+      <h3 className="whatIsDomoAge">Age: A Domo lives and never dies.</h3>
+      <br />
+      <h3 className="whatIsDomoSkill">
+        Skill: Domos are legends that are never forgotton with the skills of
+        gods!
+      </h3>
+    </div>
+  );
+};
+
 //determine what to draw
 //can update via Ajax and every time state updates page creates UI and shows
 const DomoList = function(props) {
@@ -134,7 +156,22 @@ const deleteDomosFromServer = () => {
   });
 };
 
+const createWhatIsADomoWindow = csrf => {
+  ReactDOM.render(
+    <WhatIsADomoWindow csrf={csrf} />,
+    document.querySelector("#domos")
+  );
+};
+
 const setup = function(csrf) {
+  const whatIsADomoButton = document.querySelector("#whatIsADomoButton");
+
+  whatIsADomoButton.addEventListener("click", e => {
+    e.preventDefault();
+    createWhatIsADomoWindow(csrf);
+    return false;
+  });
+
   ReactDOM.render(
     <DomoForm csrf={csrf} />,
     document.querySelector("#makeDomo")
