@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-const _ = require("underscore");
+const _ = require('underscore');
 
 let DomoModel = {};
 
@@ -14,53 +14,53 @@ const DomoSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    set: setName
+    set: setName,
   },
 
   age: {
     type: Number,
     min: 0,
-    required: true
+    required: true,
   },
 
   skill: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
 
   owner: {
     type: mongoose.Schema.ObjectId,
     required: true,
-    ref: "Account"
+    ref: 'Account',
   },
 
   createdData: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 DomoSchema.statics.toAPI = doc => ({
   name: doc.name,
   age: doc.age,
-  skill: doc.skill
+  skill: doc.skill,
 });
 
 DomoSchema.statics.findByOwner = (ownerId, callback) => {
   const search = {
-    owner: convertId(ownerId)
+    owner: convertId(ownerId),
   };
 
   return DomoModel.find(search)
-    .select("name age skill")
+    .select('name age skill')
     .exec(callback);
 };
 
 DomoSchema.statics.deleteDomos = (ownerId, callback) => {
-  console.log("in models");
+  console.log('in models');
   const search = {
-    owner: convertId(ownerId)
+    owner: convertId(ownerId),
   };
 
   // db.users.deleteMany({ status : "A" })
@@ -70,7 +70,7 @@ DomoSchema.statics.deleteDomos = (ownerId, callback) => {
   return DomoModel.remove({ search }).exec(callback);
 };
 
-DomoModel = mongoose.model("Domo", DomoSchema);
+DomoModel = mongoose.model('Domo', DomoSchema);
 
 module.exports.DomoModel = DomoModel;
 module.exports.DomoSchema = DomoSchema;

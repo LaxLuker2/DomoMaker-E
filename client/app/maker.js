@@ -66,7 +66,7 @@ const DomoForm = props => {
         <input type="hidden" name="_csrf" value={props.csrf} />
         <input className="makeDomoSubmit" type="submit" value="Make Domo" />
       </form>
-      <form
+      {/* <form
         id="deleteDomo"
         onSubmit={deleteDomo}
         name="deleteDomo"
@@ -79,7 +79,7 @@ const DomoForm = props => {
           type="submit"
           value="Delete Domos"
         />
-      </form>
+      </form> */}
     </div>
   );
 };

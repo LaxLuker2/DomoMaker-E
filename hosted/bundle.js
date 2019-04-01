@@ -74,22 +74,6 @@ var DomoForm = function DomoForm(props) {
         }),
         React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
         React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Make Domo" })
-      ),
-      React.createElement(
-        "form",
-        {
-          id: "deleteDomo",
-          onSubmit: deleteDomo,
-          name: "deleteDomo",
-          action: "/deleteDomos",
-          method: "DELETE"
-          // className="domoForm"
-        },
-        React.createElement("input", {
-          className: "deleteDomoSubmit",
-          type: "submit",
-          value: "Delete Domos"
-        })
       )
     )
   );
