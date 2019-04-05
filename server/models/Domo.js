@@ -1,76 +1,63 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
-const _ = require('underscore');
+const _ = require("underscore");
 
-let DomoModel = {};
+let FinanceModel = {};
 
 // mongoose.Types.ObjectID is a function that
 // converts stringID to real mongoID
 const convertId = mongoose.Types.ObjectId;
 const setName = name => _.escape(name).trim();
 
-const DomoSchema = new mongoose.Schema({
-  name: {
-    type: String,
+const FinanceSchema = new mongoose.Schema({
+  rent: {
+    type: Number,
     required: true,
     trim: true,
-    set: setName,
+    set: setName
   },
 
-  age: {
+  wage: {
     type: Number,
     min: 0,
-    required: true,
+    required: true
   },
 
-  skill: {
-    type: String,
+  expenses: {
+    type: Number,
     required: true,
-    trim: true,
+    trim: true
   },
 
   owner: {
     type: mongoose.Schema.ObjectId,
     required: true,
-    ref: 'Account',
+    ref: "Account"
   },
 
   createdData: {
     type: Date,
-    default: Date.now,
-  },
+    default: Date.now
+  }
 });
 
-DomoSchema.statics.toAPI = doc => ({
-  name: doc.name,
-  age: doc.age,
-  skill: doc.skill,
+FinanceSchema.statics.toAPI = doc => ({
+  rent: doc.rent,
+  wage: doc.wage,
+  expenses: doc.expenses
 });
 
-DomoSchema.statics.findByOwner = (ownerId, callback) => {
+FinanceSchema.statics.findByOwner = (ownerId, callback) => {
   const search = {
-    owner: convertId(ownerId),
+    owner: convertId(ownerId)
   };
 
-  return DomoModel.find(search)
-    .select('name age skill')
+  return FinanceModel.find(search)
+    .select("rent wage expenses")
     .exec(callback);
 };
 
-DomoSchema.statics.deleteDomos = (ownerId, callback) => {
-  console.log('in models');
-  const search = {
-    owner: convertId(ownerId),
-  };
+FinanceModel = mongoose.model("FinanceTracker", FinanceSchema);
 
-  // db.users.deleteMany({ status : "A" })
-
-  // DomoModel.remove({ search }).exec(callback);
-
-  return DomoModel.remove({ search }).exec(callback);
-};
-
-DomoModel = mongoose.model('Domo', DomoSchema);
-
-module.exports.DomoModel = DomoModel;
-module.exports.DomoSchema = DomoSchema;
+module.exports.DomoModel = FinanceModel;
+module.exports.DomoSchema = FinanceSchema;
